@@ -1,3 +1,5 @@
+"""Money Plant.py"""
+
 from machine import Pin, I2C
 from i2c_lcd import I2cLcd
 from lcd_api import LcdApi
@@ -20,6 +22,11 @@ com_protocol = communications.initialize_communications()
 
 
 def activate(time_data):
+    """Activate Timer
+
+    Args:
+        time_data (_type_): _description_
+    """
     rtc = machine.RTC()
     rtc.datetime(time_data)
     while True:
@@ -44,6 +51,11 @@ def activate(time_data):
 
 
 def messages(lcd):
+    """Loading Message
+
+    Args:
+        lcd (library): library
+    """
     lcd.move_to(0, 0)
     lcd.putstr("HL Robotics")
     lcd.move_to(0, 1)
@@ -58,6 +70,7 @@ def messages(lcd):
 
 
 def activate_pump_motor():
+    """Activate Pump Motor"""
     motor_p.value(1)
     motor_n.value(0)
     print("PUMP ON")
@@ -71,6 +84,7 @@ def activate_pump_motor():
 
 
 def activate_light():
+    """Activate Light"""
     light_p.value(1)
     light_n.value(0)
     print("LIGHTS ON")
@@ -78,6 +92,7 @@ def activate_light():
 
 
 def deactivate_light():
+    """Deactivate Light"""
     light_p.value(0)
     light_n.value(0)
     print("LIGHTS OFF")
@@ -116,7 +131,6 @@ while True:
             com_protocol.write("Second:")
         if len(time_data) == 7:
             com_protocol.write("MilliSecond:")
-
         if len(time_data) == 8:
             data = tuple(time_data)
             print(data)
